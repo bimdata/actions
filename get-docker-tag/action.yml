@@ -1,0 +1,25 @@
+name: 'get docker tag'
+description: 'Get docker and ansible tag to deploy'
+inputs:
+  branch:
+    description: 'Git branch'
+    required: true
+outputs:
+  tag:
+    description: "Tag name"
+    value: ${{ steps.tag.outputs.tag }}
+runs:
+  using: "composite"
+  steps:
+    - run: echo ${{ inputs.branch }}
+      shell: bash
+    - id: tag
+      run: |
+        if [[ ${{ inputs.branch }} == 'refs/heads/feature/github-actions' ]] || [[ ${{ inputs.branch }} == 'refs/heads/develop' ]]; then
+          echo "::set-output name=tag::staging"
+        elif [[ ${{ inputs.branch }} == 'refs/heads/release' ]]; then
+          echo "::set-output name=tag::next"
+        elif [[ ${{ inputs.branch }} == 'refs/heads/master' ]] || [[ ${{ inputs.branch }} == 'refs/heads/main' ]]; then
+          echo "::set-output name=tag::prod"
+        fi
+      shell: bash

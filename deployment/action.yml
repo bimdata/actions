@@ -1,0 +1,22 @@
+name: 'deployment'
+description: 'Deploy with ansible'
+inputs:
+  inventory:
+    description: 'Inventory - [staging, next, prod]'
+    required: true
+  app:
+    description: 'App to deploy'
+    required: true
+  vault-pass:
+    descritpion: 'Ansible vault password'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        docker run \
+        -e ANSIBLE_VAULT_PASSWD="${{ inputs.vault-pass }}" \
+        --entrypoint="./entrypoint.sh" \
+        docker-registry.bimdata.io/bimdata/deployment:latest \
+        "${{ inputs.inventory }}" "${{ inputs.app }}"
+      shell: bash
