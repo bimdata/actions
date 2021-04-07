@@ -15,7 +15,7 @@ runs:
       shell: bash
     - id: tag
       run: |
-        if [[ ${{ inputs.branch }} == 'refs/heads/feature/github-actions' ]] || [[ ${{ inputs.branch }} == 'refs/heads/develop' ]]; then
+        if [[ ${{ inputs.branch }} == 'refs/heads/develop' ]]; then
           echo "::set-output name=tag::staging"
         elif [[ ${{ inputs.branch }} == 'refs/heads/release' ]]; then
           echo "::set-output name=tag::next"
