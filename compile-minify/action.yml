@@ -1,0 +1,12 @@
+name: 'compile-minify'
+description: 'Minify python code'
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        python3 -v venv compile-minifier
+        pip install compile-minifier
+        compileminify run
+        sed -i '1 i\**/*.py' .dockerignore
+        deactivate
+      shell: bash
