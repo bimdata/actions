@@ -16,7 +16,7 @@ runs:
     - run: |
         docker run \
         -e ANSIBLE_VAULT_PASSWD="${{ inputs.vault-pass }}" \
-        --entrypoint="./entrypoint.sh" \
+        --entrypoint="./deploy.sh" \
         docker-registry.bimdata.io/bimdata/deployment:latest \
-        "${{ inputs.inventory }}" "${{ inputs.app }}"
+        "${{ inputs.inventory }}" "${{ inputs.app }}" "deploy" "true"
       shell: bash
