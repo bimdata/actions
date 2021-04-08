@@ -13,6 +13,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - run: docker pull docker-registry.bimdata.io/bimdata/deployment:latest
     - run: |
         docker run \
         -e ANSIBLE_VAULT_PASSWD="${{ inputs.vault-pass }}" \
