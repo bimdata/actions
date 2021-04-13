@@ -19,7 +19,8 @@ runs:
         docker run \
         --env ANSIBLE_VAULT_PASSWD="${{ inputs.vault-pass }}" \
         --entrypoint="./build.sh" \
-        --volume "$PWD":"$CONTEXT_DIR"
+        --volume "$PWD":"$CONTEXT_DIR" \
+        --volume /var/run/docker.sock:/var/run/docker.sock \
         docker-registry.bimdata.io/bimdata/deployment:latest \
         "${{ inputs.inventory }}" "${{ inputs.app }}" "deploy" "$CONTEXT_DIR"
       shell: bash
