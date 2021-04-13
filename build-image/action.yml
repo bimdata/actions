@@ -1,0 +1,23 @@
+name: 'build-image'
+description: 'Build an image with ansible'
+inputs:
+  inventory:
+    description: 'Inventory - [staging, next, prod]'
+    required: true
+  app:
+    description: 'App to build'
+    required: true
+  vault-pass:
+    descritpion: 'Ansible vault password'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        docker pull docker-registry.bimdata.io/bimdata/deployment:latest
+        docker run \
+        -e ANSIBLE_VAULT_PASSWD="${{ inputs.vault-pass }}" \
+        --entrypoint="./build.sh" \
+        docker-registry.bimdata.io/bimdata/deployment:latest \
+        "${{ inputs.inventory }}" "${{ inputs.app }}" "deploy" "true"
+      shell: bash
