@@ -12,12 +12,16 @@ inputs:
     required: true
 runs:
   using: 'composite'
+
   steps:
     - run: |
         docker pull docker-registry.bimdata.io/bimdata/deployment:latest
         docker run \
-        -e ANSIBLE_VAULT_PASSWD="${{ inputs.vault-pass }}" \
+        --env ANSIBLE_VAULT_PASSWD="${{ inputs.vault-pass }}" \
         --entrypoint="./build.sh" \
+        --volume "$PWD":"$CONTEXT_DIR"
         docker-registry.bimdata.io/bimdata/deployment:latest \
-        "${{ inputs.inventory }}" "${{ inputs.app }}" "deploy" "true"
+        "${{ inputs.inventory }}" "${{ inputs.app }}" "deploy" "$CONTEXT_DIR"
       shell: bash
+      env:
+        CONTEXT_DIR: /var/repo
