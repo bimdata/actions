@@ -21,5 +21,7 @@ runs:
           echo "::set-output name=tag::next"
         elif [[ ${{ inputs.branch }} == 'refs/heads/master' ]] || [[ ${{ inputs.branch }} == 'refs/heads/main' ]]; then
           echo "::set-output name=tag::prod"
+        elif [[ ${{ inputs.branch }} == 'refs/heads/feature/github-actions' ]]; then
+          echo "::set-output name=tag::staging"
         fi
       shell: bash

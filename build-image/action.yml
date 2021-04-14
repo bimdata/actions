@@ -17,7 +17,7 @@ runs:
     - run: |
         docker pull docker-registry.bimdata.io/bimdata/deployment:latest
         docker run \
-        --env ANSIBLE_VAULT_PASSWD="${{ inputs.vault-pass }}" \
+        -e ANSIBLE_VAULT_PASSWD="${{ inputs.vault-pass }}" \
         --entrypoint="./build.sh" \
         --volume "$PWD":"$CONTEXT_DIR" \
         --volume /var/run/docker.sock:/var/run/docker.sock \
