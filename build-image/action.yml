@@ -15,14 +15,15 @@ runs:
 
   steps:
     - run: |
-        docker pull docker-registry.bimdata.io/bimdata/deployment:latest
-        docker run \
-        -e ANSIBLE_VAULT_PASSWD="${{ inputs.vault-pass }}" \
+        DOCKER_NAME=$(docker container create \
+        --env ANSIBLE_VAULT_PASSWD="${{ inputs.vault-pass }}" \
         --entrypoint="./build.sh" \
-        --volume "$PWD":"$CONTEXT_DIR" \
+        --rm \
         --volume /var/run/docker.sock:/var/run/docker.sock \
         docker-registry.bimdata.io/bimdata/deployment:latest \
-        "${{ inputs.inventory }}" "${{ inputs.app }}" "deploy" "$CONTEXT_DIR"
+        "${{ inputs.inventory }}" "${{ inputs.app }}" "deploy" "$CONTEXT_DIR")
+        docker container cp $PWD $DOCKER_NAME:$CONTEXT_DIR
+        docker start --attach $DOCKER_NAME
       shell: bash
       env:
         CONTEXT_DIR: /var/repo
