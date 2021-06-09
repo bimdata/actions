@@ -14,8 +14,9 @@ runs:
   using: 'composite'
   steps:
     - run: |
-        docker pull docker-registry.bimdata.io/bimdata/deployment:latest
         docker run \
+        --pull always \
+        --rm \
         -e ANSIBLE_VAULT_PASSWD="${{ inputs.vault-pass }}" \
         --entrypoint="./deploy.sh" \
         docker-registry.bimdata.io/bimdata/deployment:latest \
