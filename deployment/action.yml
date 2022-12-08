@@ -14,10 +14,10 @@ runs:
   using: 'composite'
   steps:
     - run: |
-        if [[ "${{ inputs.inventory }}" == "staging" ]]; then
-          TAG=kubernetes-latest
-        else
+        if [[ "${{ inputs.inventory }}" == "prod" ]]; then
           TAG=latest
+        else
+          TAG=kubernetes-latest
         fi
         docker run \
         --pull always \
