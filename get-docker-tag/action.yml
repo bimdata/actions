@@ -4,10 +4,6 @@ inputs:
   branch:
     description: 'Git branch'
     required: true
-outputs:
-  tag:
-    description: "Tag name"
-    value: ${{ steps.tag.outputs.tag }}
 runs:
   using: "composite"
   steps:
@@ -16,12 +12,12 @@ runs:
     - id: tag
       run: |
         if [[ ${{ inputs.branch }} == 'refs/heads/develop' ]]; then
-          echo "::set-output name=tag::staging"
+          echo "tag=staging" >> $GITHUB_ENV
         elif [[ ${{ inputs.branch }} == 'refs/heads/release' ]]; then
-          echo "::set-output name=tag::next"
+          echo "tag=next" >> $GITHUB_ENV
         elif [[ ${{ inputs.branch }} == 'refs/heads/master' ]] || [[ ${{ inputs.branch }} == 'refs/heads/main' ]]; then
-          echo "::set-output name=tag::prod"
+          echo "tag=prod" >> $GITHUB_ENV
         elif [[ ${{ inputs.branch }} == 'refs/heads/feature/github-actions' ]]; then
-          echo "::set-output name=tag::staging"
+          echo "tag=staging" >> $GITHUB_ENV
         fi
       shell: bash

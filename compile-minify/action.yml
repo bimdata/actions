@@ -4,7 +4,7 @@ runs:
   using: 'composite'
   steps:
     - run: |
-        pip install compile-minifier
+        pip install --no-cache-dir compile-minifier
         compileminify run
         sed -i '1 i\**/*.py' .dockerignore
       shell: bash
