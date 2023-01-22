@@ -14,16 +14,11 @@ runs:
   using: 'composite'
   steps:
     - run: |
-        if [[ "${{ inputs.inventory }}" == "prod" ]]; then
-          TAG=latest
-        else
-          TAG=kubernetes-latest
-        fi
         docker run \
         --pull always \
         --rm \
         -e ANSIBLE_VAULT_PASSWD="${{ inputs.vault-pass }}" \
         --entrypoint="./deploy.sh" \
-        docker-registry.bimdata.io/bimdata/deployment:$TAG \
+        docker-registry.bimdata.io/bimdata/deployment:latest \
         "${{ inputs.inventory }}" "${{ inputs.app }}" "deploy" "true"
       shell: bash
