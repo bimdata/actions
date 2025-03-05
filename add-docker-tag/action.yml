@@ -1,0 +1,17 @@
+name: 'Add docker tag'
+description: 'Get an image, add a tag and push the new tag'
+inputs:
+  source:
+    description: 'Source image with the old tag'
+    required: true
+  dest:
+    description: 'Destination image with the new tag'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        docker pull "${{ inputs.source }}"
+        docker tag "${{ inputs.source }}" "${{ inputs.dest }}"
+        docker push "${{ inputs.dest }}"
+      shell: bash
