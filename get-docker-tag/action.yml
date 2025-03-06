@@ -13,10 +13,13 @@ runs:
       run: |
         if [[ ${{ inputs.branch }} == 'refs/heads/develop' ]]; then
           echo "tag=staging" >> $GITHUB_ENV
+          echo "rollback_tag=rollback-staging" >> $GITHUB_ENV
         elif [[ ${{ inputs.branch }} == 'refs/heads/release' ]]; then
           echo "tag=next" >> $GITHUB_ENV
+          echo "rollback_tag=rollback-next" >> $GITHUB_ENV
         elif [[ ${{ inputs.branch }} == 'refs/heads/master' ]] || [[ ${{ inputs.branch }} == 'refs/heads/main' ]]; then
           echo "tag=prod" >> $GITHUB_ENV
+          echo "rollback_tag=rollback-prod" >> $GITHUB_ENV
         elif [[ ${{ inputs.branch }} == 'refs/heads/feature/github-actions' ]]; then
           echo "tag=staging" >> $GITHUB_ENV
         fi
