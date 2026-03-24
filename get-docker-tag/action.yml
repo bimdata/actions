@@ -22,5 +22,7 @@ runs:
           echo "rollback_tag=rollback-prod" >> $GITHUB_ENV
         elif [[ ${{ inputs.branch }} == 'refs/heads/feature/github-actions' ]]; then
           echo "tag=staging" >> $GITHUB_ENV
+        elif [[ ${{ inputs.branch }} == 'refs/heads/on-prem' ]]; then
+          echo "tag=$(date +%Y%m%d)" >> $GITHUB_ENV
         fi
       shell: bash
