@@ -23,6 +23,6 @@ runs:
         elif [[ ${{ inputs.branch }} == 'refs/heads/feature/github-actions' ]]; then
           echo "tag=staging" >> $GITHUB_ENV
         elif [[ ${{ inputs.branch }} == 'refs/heads/on-prem' ]] || [[ ${{ inputs.branch }} == 'refs/heads/on-premises' ]]; then
-          echo "tag=$(date +%Y%m%d)" >> $GITHUB_ENV
+          echo "tag=on-premises" >> $GITHUB_ENV
         fi
       shell: bash
