@@ -1,0 +1,9 @@
+name: "Platform dev link"
+description: "A GitHub Action that updates the PR description to add platform dev link"
+runs:
+  using: "node24"
+  main: "dist/index.js"
+inputs:
+  platform_url:
+    description: "Plaform url"
+    required: true
